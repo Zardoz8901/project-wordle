@@ -1,18 +1,17 @@
 import React from "react";
 
 function GuessInput() {
-  const [inputValue, setInputValue] = React.useState("");
+  const [guess, setGuess] = React.useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(inputValue);
-    setInputValue("");
+    console.log(guess);
+    setGuess("");
   }
 
   function handleOnChange(event) {
     const newValue = event.target.value;
-    console.log(typeof newValue);
-    setInputValue(newValue.toUpperCase());
+    setGuess(newValue.toUpperCase());
   }
 
   return (
@@ -23,7 +22,7 @@ function GuessInput() {
           id="guess-input"
           type="text"
           pattern="[A-Za-z]{5}"
-          value={inputValue}
+          value={guess}
           onChange={handleOnChange}
           title="Enter a 5 character word"
           required
