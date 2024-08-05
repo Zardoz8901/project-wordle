@@ -8,6 +8,8 @@ function GuessInput() {
     event.preventDefault();
     console.log({ guess });
     resultsHandler({ guess });
+    console.log(results);
+
     setGuess("");
   }
 
@@ -21,7 +23,7 @@ function GuessInput() {
   function resultsHandler({ guess }) {
     const newResult = {
       id: crypto.randomUUID(),
-      guess: { guess },
+      guess: guess,
     };
     setResults([...results, newResult]);
   }

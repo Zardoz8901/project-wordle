@@ -4,10 +4,12 @@ function GuessResults({ results }) {
   return (
     <>
       <div className="guess-results">
-        {results.map((results) => {
-          <p className="guess" key={results.id}>
-            {results.name}
-          </p>;
+        {results.map((items) => {
+          return (
+            <p className="guess" key={items.id}>
+              {items.guess}
+            </p>
+          );
         })}
       </div>
     </>
