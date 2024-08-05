@@ -14,7 +14,6 @@ function Game() {
   return (
     <>
       <GuessInput />
-      <GuessResults />
     </>
   );
 }

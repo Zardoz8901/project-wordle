@@ -1,4 +1,5 @@
 import React from "react";
+import GuessResults from "../GuessResults/GuessResults";
 
 function GuessInput() {
   const [guess, setGuess] = React.useState("");
@@ -6,6 +7,7 @@ function GuessInput() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log({ guess });
+    resultsHandler({ guess });
     setGuess("");
   }
 
@@ -14,8 +16,19 @@ function GuessInput() {
     setGuess(nextGuess.toUpperCase());
   }
 
+  const [results, setResults] = React.useState([]);
+
+  function resultsHandler({ guess }) {
+    const newResult = {
+      id: crypto.randomUUID(),
+      guess: { guess },
+    };
+    setResults([...results, newResult]);
+  }
+
   return (
     <>
+      <GuessResults results={results} />
       <form className="guess-input-wrapper" onSubmit={handleSubmit}>
         <label htmlFor="guess-input">Enter word:</label>
         <input
