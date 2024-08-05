@@ -5,13 +5,13 @@ function GuessInput() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(guess);
+    console.log({ guess });
     setGuess("");
   }
 
   function handleOnChange(event) {
-    const newValue = event.target.value;
-    setGuess(newValue.toUpperCase());
+    const nextGuess = event.target.value;
+    setGuess(nextGuess.toUpperCase());
   }
 
   return (
