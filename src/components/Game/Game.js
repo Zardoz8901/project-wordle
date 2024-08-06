@@ -11,9 +11,19 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  const [guesses, setGuesses] = React.useState([]);
+
+  function resultsHandler(tentativeGuess) {
+    const newGuess = {
+      id: crypto.randomUUID(),
+      guess: tentativeGuess,
+    };
+    setGuesses([...guesses, newGuess]);
+  }
   return (
     <>
-      <GuessInput />
+      <GuessResults guesses={guesses} />
+      <GuessInput resultsHandler={resultsHandler} />
     </>
   );
 }
