@@ -6,8 +6,11 @@ function Guess({ value }) {
     <p className="guess">
       {range(5).map((num) => {
         return (
-          <span className="cell" key={num}>
-            {value ? value[num] : undefined}
+          <span
+            className={`cell  ${value ? value[num].status : undefined}`}
+            key={num}
+          >
+            {value ? value[num].letter : undefined}
           </span>
         );
       })}
