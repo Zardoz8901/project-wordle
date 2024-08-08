@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessInput({ resultsHandler, verifiedResultsHandler }) {
+function GuessInput({ resultsHandler, verifiedResultsHandler, endGame }) {
   const [tentativeGuess, setTentativeGuess] = React.useState("");
 
   function handleSubmit(event) {
@@ -15,6 +15,10 @@ function GuessInput({ resultsHandler, verifiedResultsHandler }) {
     setTentativeGuess(nextGuess.toUpperCase());
   }
 
+  function inputHandler() {
+    return endGame ? "" : tentativeGuess;
+  }
+
   return (
     <>
       <form className="guess-input-wrapper" onSubmit={handleSubmit}>
@@ -23,9 +27,10 @@ function GuessInput({ resultsHandler, verifiedResultsHandler }) {
           id="guess-input"
           type="text"
           pattern="[A-Za-z]{5}"
-          value={tentativeGuess}
+          value={inputHandler()}
           onChange={handleOnChange}
           title="Enter a 5 character word"
+          disabled={endGame}
           required
         />
       </form>

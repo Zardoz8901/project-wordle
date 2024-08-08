@@ -1,28 +1,15 @@
 import React from "react";
-import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
-function Banner({ correctCount, verifiedGuesses }) {
-  function correctCountHandler() {
-    console.log(verifiedGuesses.length);
-    if (correctCount === 5) {
-      return window.alert("winner");
-    } else if (
-      verifiedGuesses.length === NUM_OF_GUESSES_ALLOWED &&
-      correctCount !== 5
-    ) {
-      return window.alert("failure");
-    }
-  }
-
+function Banner({ bannerState }) {
   return (
     <>
-      <div className="happy banner visually-hidden">
+      <div className={`${bannerState} banner`}>
         <p>
           <strong>Congratulations!</strong> Got it in
-          <strong>3 guesses</strong>.{correctCountHandler()}
+          <strong>3 guesses</strong>.
         </p>
       </div>
-      <div className="sad banner visually-hidden">
+      <div className={`${bannerState} banner`}>
         <p>
           Sorry, the correct answer is <strong>LEARN</strong>.
         </p>
