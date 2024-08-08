@@ -3,7 +3,7 @@ import { range } from "../../utils";
 import Guess from "../Guess/Guess";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
-function GuessResults({ guesses, verifiedGuesses }) {
+function GuessResults({ verifiedGuesses }) {
   return (
     <>
       <div className="guess-results">
