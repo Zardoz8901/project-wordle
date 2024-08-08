@@ -5,7 +5,8 @@ import { WORDS } from "../../data";
 import GuessInput from "../GuessInput/GuessInput";
 import GuessResults from "../GuessResults/GuessResults";
 import { checkGuess } from "../../game-helpers";
-import Banner from "../Banner/Banner";
+import WonBanner from "../WonBanner/WonBanner";
+import LossBanner from "../LossBanner/LossBanner";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 // Pick a random word on every pageload.
@@ -15,47 +16,26 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
-  const [verifiedGuesses, setVerifiedGuesses] = React.useState([]);
-  const [correctCount, setCorrectCount] = React.useState(0);
-  const [endGame, setEndGame] = React.useState(false);
-  const [bannerState, setBannerState] = React.useState("visually-hidden");
+  const [gameStatus, setGameStatus] = React.useState("running");
 
-  function resultsHandler(tentativeGuess) {
-    setGuesses([...guesses, tentativeGuess]);
-  }
-
-  function verifiedResultsHandler(tentativeGuess) {
+  function handleSubmitGuess(tentativeGuess) {
     const newGuess = checkGuess(tentativeGuess, answer);
-    const filteredStatus = newGuess.filter(
-      (letter) => letter.status === "correct"
-    ).length;
-    setVerifiedGuesses((prevGuesses) => {
-      const updatedGuesses = [...prevGuesses, newGuess];
-      updateBannerState(updatedGuesses.length, filteredStatus);
-      return updatedGuesses;
-    });
-    setCorrectCount(filteredStatus);
-  }
+    const nextGuesses = [...guesses, newGuess];
+    setGuesses(nextGuesses);
 
-  function updateBannerState(guessCount, correctCount) {
-    if (correctCount === 5) {
-      setBannerState("happy");
-      setEndGame(true);
-    } else if (guessCount === NUM_OF_GUESSES_ALLOWED && correctCount !== 5) {
-      setBannerState("sad");
-      setEndGame(true);
+    if (tentativeGuess.toUpperCase() === answer) {
+      setGameStatus("won");
+    } else if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus("lost");
     }
   }
 
   return (
     <>
-      <GuessResults verifiedGuesses={verifiedGuesses} />
-      <GuessInput
-        resultsHandler={resultsHandler}
-        verifiedResultsHandler={verifiedResultsHandler}
-        endGame={endGame}
-      />
-      <Banner bannerState={bannerState} />
+      <GuessResults guesses={guesses} />
+      <GuessInput resultsHandler={handleSubmitGuess} gameStatus={gameStatus} />
+      {gameStatus === "won" && <WonBanner numOfGuesses={guesses.length} />}
+      {gameStatus === "lost" && <LossBanner answer={answer} />}
     </>
   );
 }
